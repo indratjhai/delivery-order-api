@@ -1,0 +1,49 @@
+{
+  "name": "delivery-order-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/indratjhai/delivery-order-api",
+  "author": "indra.tjhai@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --setupFiles dotenv/config --coverage --detectOpenHandles --forceExit",
+    "test:docker": "docker exec -ti deliveryorderapi_app_1 yarn test",
+    "start:dev": "NODE_ENV=development nodemon -L --exec 'node -r dotenv/config index.js --async-stack-traces'",
+    "start:prod": "NODE_ENV=production node -r dotenv/config index.js --async-stack-traces"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "jest": "^24.9.0",
+    "jest-runner-eslint": "^0.7.5",
+    "nodemon": "^2.0.1",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "@google/maps": "^1.0.2",
+    "body-parser": "^1.19.0",
+    "check-types": "^11.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "mysql2": "^2.0.2"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "test",
+        "testEnvironment": "node"
+      },
+      {
+        "displayName": "lint",
+        "runner": "jest-runner-eslint",
+        "testMatch": [
+          "<rootDir>/**/*.js",
+          "!<rootDir>/coverage/**/*.js"
+        ]
+      }
+    ]
+  }
+}
