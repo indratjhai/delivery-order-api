@@ -15,7 +15,7 @@
 1. To run tests locally, run `yarn test`. (you need all dependencies installed locally.)
 2. If you're running the app inside a docker, you can run `docker exec -ti delivery-order-api_app_1 yarn test` to run tests inside the docker container.
 
-TODO
+# TODO
 - [x] RESTful HTTP API listening to port 8080.
 - [x] MySQL database is used to store orders.
   - [x] Database schema is in `./schemas/*`.
