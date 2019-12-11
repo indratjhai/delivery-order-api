@@ -22,6 +22,6 @@ exports.calculateDistance = async (
   } catch (e) {
     // This is to catch plain text thrown by Google Maps API Client.
     // Rethrow as an Error.
-    throw new Error(e);
+    throw new Error(`Error occured when calling GoogleMaps API: ${e}`);
   }
 };
