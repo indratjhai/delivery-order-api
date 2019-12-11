@@ -5,12 +5,11 @@ services:
     build: .
     ports:
       - ${SERVER_PORT}:8080
-    restart: always
     volumes:
       - ./:/app/
     environment:
       DATABASE_HOST: db
-    command: yarn start:dev
+    command: yarn test
     depends_on:
       - db
   db:
@@ -20,7 +19,6 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
       - ./schemas/:/docker-entrypoint-initdb.d/:ro
-    restart: always
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USERNAME}

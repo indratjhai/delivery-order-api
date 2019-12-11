@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --setupFiles dotenv/config --coverage --detectOpenHandles --forceExit",
-    "test:docker": "docker exec -ti deliveryorderapi_app_1 yarn test",
+    "test:docker": "docker exec -ti deliveryorderapi_app_1 yarn test --abort-on-container-exit",
     "start:dev": "NODE_ENV=development nodemon -L --exec 'node -r dotenv/config index.js --async-stack-traces'",
     "start:prod": "NODE_ENV=production node -r dotenv/config index.js --async-stack-traces"
   },
@@ -40,8 +40,10 @@
         "displayName": "lint",
         "runner": "jest-runner-eslint",
         "testMatch": [
-          "<rootDir>/**/*.js",
-          "!<rootDir>/coverage/**/*.js"
+          "<rootDir>/**/*.js"
+        ],
+        "testPathIgnorePatterns": [
+          "/coverage/"
         ]
       }
     ]

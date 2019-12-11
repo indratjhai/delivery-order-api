@@ -99,14 +99,5 @@ describe('update', () => {
         status: 'TAKEN',
       },
     }, null)).rejects.toThrow(new NotFoundError('Order not found'));
-
-    await expect(ordersController.update({
-      params: {
-        id: 1,
-      },
-      body: {
-        status: 'TAKEN',
-      },
-    }, null)).rejects.toThrow(new ValidationError('Order has already been taken by someone else'));
   });
 });

@@ -15,7 +15,19 @@ describe('GET /nonexistent', () => {
 
 describe('GET /orders', () => {
   it('should list all orders', async () => {
-    const res = await request(app)
+    // Create one order first in case the table is still empty.
+    let res;
+    res = await request(app)
+      .post('/orders')
+      .send({
+        origin: ['-6.185700799999999', '106.8111084'],
+        destination: ['-6.2073402', '106.7976586'],
+      });
+
+    expect(res.statusCode).toEqual(200);
+    expect(typeof res.body.id).toContain('number');
+
+    res = await request(app)
       .get('/orders');
 
     expect(res.statusCode).toEqual(200);
@@ -58,20 +70,8 @@ describe('take', () => {
     });
   });
 
-  it('should return validation error when order is taken', async () => {
-    const res = await request(app)
-      .patch('/orders/1')
-      .send({
-        status: 'TAKEN',
-      });
-
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toStrictEqual({
-      error: 'Order has already been taken by someone else',
-    });
-  });
-
   it('should return 200 when order has been succesfully taken', async () => {
+    // First, create the order to be taken
     let res;
     res = await request(app)
       .post('/orders')
@@ -83,6 +83,7 @@ describe('take', () => {
     expect(res.statusCode).toEqual(200);
     expect(typeof res.body.id).toContain('number');
 
+    // Reuse the order created above
     const orderId = res.body.id;
 
     res = await request(app)
@@ -94,6 +95,46 @@ describe('take', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toStrictEqual({
       status: 'SUCCESS',
+    });
+  });
+
+  it('should return validation error when order is taken', async () => {
+    // First, create the order to be taken
+    let res;
+    res = await request(app)
+      .post('/orders')
+      .send({
+        origin: ['-6.185700799999999', '106.8111084'],
+        destination: ['-6.2073402', '106.7976586'],
+      });
+
+    expect(res.statusCode).toEqual(200);
+    expect(typeof res.body.id).toContain('number');
+
+    // Take the the order created above
+    const orderId = res.body.id;
+
+    res = await request(app)
+      .patch(`/orders/${orderId}`)
+      .send({
+        status: 'TAKEN',
+      });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toStrictEqual({
+      status: 'SUCCESS',
+    });
+
+    // Retake the the order created above
+    res = await request(app)
+      .patch(`/orders/${orderId}`)
+      .send({
+        status: 'TAKEN',
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toStrictEqual({
+      error: 'Order has already been taken by someone else',
     });
   });
 });
