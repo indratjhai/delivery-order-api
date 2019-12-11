@@ -8,12 +8,12 @@
   2. All other details can be left unchanged.
 2. Run `./start.sh`. It will set up all docker containers and database.
 3. API endpoints are ready at `https://localhost:8080/orders`.
-4. To set up testing environment and run internal tests, run `docker-compose -f docker-compose.test.yml -p deliveryorderapi up  --abort-on-container-exit`.
-5. To set up production environment, run `docker-compose -f docker-compose.production.yml -p deliveryorderapi up`.
+4. To set up testing environment and run internal tests, run `docker-compose -f docker-compose.test.yml -p delivery-order-api up  --abort-on-container-exit`.
+5. To set up production environment, run `docker-compose -f docker-compose.production.yml -p delivery-order-api up`.
 
 # Tests
 1. To run tests locally, run `yarn test`. (you need all dependencies installed locally.)
-2. If you're running the app inside a docker, you can run `docker exec -ti deliveryorderapi_app_1 yarn test` to run tests inside the docker container.
+2. If you're running the app inside a docker, you can run `docker exec -ti delivery-order-api_app_1 yarn test` to run tests inside the docker container.
 
 TODO
 - [x] RESTful HTTP API listening to port 8080.
