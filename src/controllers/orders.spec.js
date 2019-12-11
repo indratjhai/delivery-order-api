@@ -18,13 +18,13 @@ describe('list', () => {
 
     await expect(ordersController.list({
       query: {
-        page: '-1',
+        page: '0',
       },
     }, null)).rejects.toThrow(new ValidationError('\'page\' value must be grater than zero'));
 
     await expect(ordersController.list({
       query: {
-        limit: '-1',
+        limit: '0',
       },
     }, null)).rejects.toThrow(new ValidationError('\'limit\' value must be grater than zero'));
   });

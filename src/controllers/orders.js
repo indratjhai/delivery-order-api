@@ -19,10 +19,10 @@ async function list(req, res) {
   page = parseInt(page);
   limit = parseInt(limit);
 
-  if (page < 0) {
+  if (page < 1) {
     throw new ValidationError('\'page\' value must be grater than zero');
   }
-  if (limit < 0) {
+  if (limit < 1) {
     throw new ValidationError('\'limit\' value must be grater than zero');
   }
 
